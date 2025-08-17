@@ -11,6 +11,10 @@ import {
 import { Profile } from './profile.entity';
 import { Exclude } from 'class-transformer';
 
+export enum UserRole {
+  ADMIN = 'admin', PRODUCER = 'producer', AUDITOR = 'auditor', TRANSPORTER = 'transporter',VIEWER='viewer'
+}
+
 @Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn()
@@ -20,8 +24,15 @@ export class User {
   email: string;
 
   @Exclude()
-  @Column()
+  @Column({select:false})
   password: string;
+
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.VIEWER, // por ejemplo
+  })
+  role: UserRole;
 
   @CreateDateColumn({
     type: 'timestamptz',

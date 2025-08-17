@@ -12,4 +12,6 @@ export class CreateProfileDto {
   @IsString()
   @IsOptional()
   avatar: string;
+
+
 }

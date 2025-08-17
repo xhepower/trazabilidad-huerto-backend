@@ -1,5 +1,6 @@
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsString,
   MinLength,
@@ -7,6 +8,7 @@ import {
 } from 'class-validator';
 import { CreateProfileDto } from './create-profile.dto';
 import { Type } from 'class-transformer';
+import { UserRole } from '../entities/user.entity';
 
 export class CreateUserDto {
   @IsString()
@@ -17,6 +19,9 @@ export class CreateUserDto {
   @IsEmail()
   @IsNotEmpty()
   email: string;
+
+   @IsEnum(UserRole)
+  role: UserRole;
 
   @ValidateNested()
   @Type(() => CreateProfileDto)
