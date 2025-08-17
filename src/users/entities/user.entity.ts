@@ -13,9 +13,6 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
-  name: string;
-
   @Column({ unique: true, type: 'varchar', length: 255 })
   email: string;
 
@@ -36,7 +33,7 @@ export class User {
   })
   updatedAt: Date;
 
-  @OneToOne(() => Profile, { nullable: false, cascade: true, eager: true })
+  @OneToOne(() => Profile, { nullable: false, cascade: true })
   @JoinColumn({ name: 'profile_id' })
   profile: Profile;
 }
