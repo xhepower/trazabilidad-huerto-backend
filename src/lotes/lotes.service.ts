@@ -1,39 +1,39 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateLoteDto } from './dto/create-lote.dto';
-import { UpdateLoteDto } from './dto/update-lote.dto';
+import { CreateLotDto } from './dto/create-lot.dto';
+import { UpdateLotDto } from './dto/update-lot.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Lote } from './entities/lote.entity';
+import { Lot } from './entities/lot.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class LotesService {
-  @InjectRepository(Lote)
-  private lotesRepository: Repository<Lote>;
-  async create(createLoteDto: CreateLoteDto) {
-    const newLote = await this.lotesRepository.save(createLoteDto);
-    return newLote;
+export class LotsService {
+  @InjectRepository(Lot)
+  private lotsRepository: Repository<Lot>;
+  async create(createLotDto: CreateLotDto) {
+    const newLot = await this.lotsRepository.save(createLotDto);
+    return newLot;
   }
 
   async findAll() {
-    return this.lotesRepository.find();
+    return this.lotsRepository.find();
   }
 
   async findOne(id: number) {
-    const lote = await this.lotesRepository.findOneBy({ id });
-    if (!lote) {
-      throw new NotFoundException(`Lote with id ${id} not found`);
+    const lot = await this.lotsRepository.findOneBy({ id });
+    if (!lot) {
+      throw new NotFoundException(`Lot with id ${id} not found`);
     }
-    return lote;
+    return lot;
   }
 
-  async update(id: number, updateLoteDto: UpdateLoteDto) {
-    const lote = await this.findOne(id);
-    const updatedLote = this.lotesRepository.merge(lote, updateLoteDto);
-    return await this.lotesRepository.save(updatedLote);
+  async update(id: number, updateLotDto: UpdateLotDto) {
+    const lot = await this.findOne(id);
+    const updatedLot = this.lotsRepository.merge(lot, updateLotDto);
+    return await this.lotsRepository.save(updatedLot);
   }
 
   async remove(id: number) {
-    const lote = await this.findOne(id);
-    return this.lotesRepository.delete(id);
+    const lot = await this.findOne(id);
+    return this.lotsRepository.delete(id);
   }
 }

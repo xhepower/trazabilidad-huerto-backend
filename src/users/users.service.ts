@@ -13,7 +13,7 @@ export class UsersService {
     
     try {
       const newUser = await this.usersRepository.create(createUserDto);
-      const savedUser = await this.usersRepository.create(newUser);
+      const savedUser = await this.usersRepository.save(newUser);
       return this.findOne(savedUser.id);
     } catch (error) {
       throw new BadRequestException('Error creating user');

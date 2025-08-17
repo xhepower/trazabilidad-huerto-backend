@@ -8,36 +8,36 @@ import {
   Delete,
   ParseIntPipe,
 } from '@nestjs/common';
-import { LotesService } from './lotes.service';
-import { CreateLoteDto } from './dto/create-lote.dto';
-import { UpdateLoteDto } from './dto/update-lote.dto';
+import { LotsService } from './lots.service';
+import { CreateLotDto } from './dto/create-lot.dto';
+import { UpdateLotDto } from './dto/update-lot.dto';
 
-@Controller('lotes')
-export class LotesController {
-  constructor(private readonly lotesService: LotesService) {}
+@Controller('lots')
+export class LotsController {
+  constructor(private readonly lotsService: LotsService) {}
 
   @Post()
-  create(@Body() createLoteDto: CreateLoteDto) {
-    return this.lotesService.create(createLoteDto);
+  create(@Body() createLotDto: CreateLotDto) {
+    return this.lotsService.create(createLotDto);
   }
 
   @Get()
   findAll() {
-    return this.lotesService.findAll();
+    return this.lotsService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: string) {
-    return this.lotesService.findOne(+id);
+    return this.lotsService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLoteDto: UpdateLoteDto) {
-    return this.lotesService.update(+id, updateLoteDto);
+  update(@Param('id') id: string, @Body() updateLotDto: UpdateLotDto) {
+    return this.lotsService.update(+id, updateLotDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.lotesService.remove(+id);
+    return this.lotsService.remove(+id);
   }
 }

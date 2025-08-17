@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { LotesService } from './lotes.service';
-import { LotesController } from './lotes.controller';
+import { LotsService } from './lots.service';
+import { LotsController } from './lots.controller';
 import { UsersService } from 'src/users/users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Lote } from './entities/lote.entity';
+import { Lot } from './entities/lot.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Lote])],
-  controllers: [LotesController],
-  providers: [LotesService],
-  exports: [LotesService],
+  imports: [TypeOrmModule.forFeature([Lot])],
+  controllers: [LotsController],
+  providers: [LotsService],
+  exports: [LotsService],
 })
-export class LotesModule {}
+export class LotsModule {}
