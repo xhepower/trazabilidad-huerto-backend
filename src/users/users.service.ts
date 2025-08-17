@@ -10,8 +10,8 @@ export class UsersService {
   @InjectRepository(User)
   private usersRepository: Repository<User>;
   async create(createUserDto: CreateUserDto) {
-    const newUser=await this.usersRepository.save(createUserDto)
-    return newUser
+    const newUser = await this.usersRepository.save(createUserDto);
+    return newUser;
   }
 
   async findAll() {
@@ -27,13 +27,13 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const user=await this.findOne(id)
-    const updatedUser= this.usersRepository.merge(user,updateUserDto)
-    return await this.usersRepository.save(updatedUser)
+    const user = await this.findOne(id);
+    const updatedUser = this.usersRepository.merge(user, updateUserDto);
+    return await this.usersRepository.save(updatedUser);
   }
 
   remove(id: number) {
-    const user=this.findOne(id)
-    return this.usersRepository.delete(id)
+    const user = this.findOne(id);
+    return this.usersRepository.delete(id);
   }
 }

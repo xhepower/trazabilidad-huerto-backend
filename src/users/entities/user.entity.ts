@@ -36,7 +36,7 @@ export class User {
   })
   updatedAt: Date;
 
-  @OneToOne(()=>Profile)
-  @JoinColumn({name:"profile_id"})
-  profile:Profile
+  @OneToOne(() => Profile, { nullable: false, cascade: true, eager: true })
+  @JoinColumn({ name: 'profile_id' })
+  profile: Profile;
 }
