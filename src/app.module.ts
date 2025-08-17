@@ -5,6 +5,7 @@ import { Env } from './env.model';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { LotesModule } from './lotes/lotes.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UsersModule } from './users/users.module';
       }),
     }),
     UsersModule,
+    LotesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
