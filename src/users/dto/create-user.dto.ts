@@ -1,5 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import { IsEmail, IsNotEmpty, IsString, MinLength, ValidateNested } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  MinLength,
+  ValidateNested,
+} from 'class-validator';
 import { CreateProfileDto } from './create-profile.dto';
 import { Type } from 'class-transformer';
 
@@ -15,5 +20,6 @@ export class CreateUserDto {
 
   @ValidateNested()
   @Type(() => CreateProfileDto)
+  @IsNotEmpty()
   profile: CreateProfileDto;
 }
