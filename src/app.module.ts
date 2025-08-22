@@ -22,6 +22,7 @@ import { CertificationsModule } from './certifications/certifications.module';
 import { ExportationsModule } from './exportations/exportations.module';
 import { InputsModule } from './inputs/inputs.module';
 import { SalesModule } from './sales/sales.module';
+import { ProfilesModule } from './users/profiles.module';
 
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import { SalesModule } from './sales/sales.module';
     ExportationsModule,
     InputsModule,
     SalesModule,
+    ProfilesModule
   ],
   controllers: [AppController],
   providers: [AppService],

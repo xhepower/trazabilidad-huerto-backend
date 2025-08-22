@@ -18,7 +18,8 @@ export class Profile {
 
   @Column({ type: 'varchar', length: 255, name: 'last_name' })
   lastName: string;
-
+  @Column({ type: 'varchar', length: 255, name: 'identification_number' })
+  identificationNumber: string;
   @Column({ type: 'varchar', length: 255, nullable: true })
   avatar: string;
 
