@@ -20,6 +20,8 @@ import { ClassificationsModule } from './classifications/classifications.module'
 import { TransportsModule } from './transports/transports.module';
 import { CertificationsModule } from './certifications/certifications.module';
 import { ExportationsModule } from './exportations/exportations.module';
+import { InputsModule } from './inputs/inputs.module';
+import { SalesModule } from './sales/sales.module';
 
 @Module({
   imports: [
@@ -53,6 +55,8 @@ import { ExportationsModule } from './exportations/exportations.module';
     TransportsModule,
     CertificationsModule,
     ExportationsModule,
+    InputsModule,
+    SalesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
