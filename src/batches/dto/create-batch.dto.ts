@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString, IsDateString } from 'class-validator';
-export class CreateLotDto {
+export class CreateBatchDto {
   @IsString()
   @IsNotEmpty()
   nombre: string;

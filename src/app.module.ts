@@ -5,8 +5,9 @@ import { Env } from './env.model';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { LotsModule } from './lots/lots.module';
+
 import { SuppliersModule } from './suppliers/suppliers.module';
+import { BatchesModule } from './batches/batches.module';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { SuppliersModule } from './suppliers/suppliers.module';
       }),
     }),
     UsersModule,
-    LotsModule,
+    BatchesModule,
     SuppliersModule,
   ],
   controllers: [AppController],

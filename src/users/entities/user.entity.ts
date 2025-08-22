@@ -12,7 +12,7 @@ import { Profile } from './profile.entity';
 import { Exclude } from 'class-transformer';
 
 export enum UserRole {
-  ADMIN = 'admin', PRODUCER = 'producer', AUDITOR = 'auditor', TRANSPORTER = 'transporter',VIEWER='viewer'
+  ADMIN = 'admin', FARMER = 'producer', AUDITOR = 'auditor', TRANSPORTER = 'transporter',RETAILER="retailer",VIEWER='viewer',DISTRIBUTOR="distributor"
 }
 
 @Entity({ name: 'users' })
@@ -24,7 +24,7 @@ export class User {
   email: string;
 
   @Exclude()
-  @Column({select:false})
+  @Column({ select: false })
   password: string;
 
   @Column({
@@ -33,6 +33,9 @@ export class User {
     default: UserRole.VIEWER, // por ejemplo
   })
   role: UserRole;
+
+  @Column({ default: true ,name:"is_active"})
+  isActive: boolean;
 
   @CreateDateColumn({
     type: 'timestamptz',
