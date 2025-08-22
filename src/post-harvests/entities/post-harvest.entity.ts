@@ -1,7 +1,7 @@
 import { Lot } from "src/lots/entities/lot.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity({name:"post_harvest"})
 export class PostHarvest {
   @PrimaryGeneratedColumn('uuid')
   id: string;
