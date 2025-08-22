@@ -7,7 +7,19 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 
 import { SuppliersModule } from './suppliers/suppliers.module';
-import { BatchesModule } from './batches/batches.module';
+import { ProducersModule } from './producers/producers.module';
+import { PlotsModule } from './plots/plots.module';
+import { CropsModule } from './crops/crops.module';
+import { PlantingsModule } from './plantings/plantings.module';
+import { InterventionsModule } from './interventions/interventions.module';
+import { ClimaticConditionsModule } from './climatic-conditions/climatic-conditions.module';
+import { HarvestsModule } from './harvests/harvests.module';
+import { LotsModule } from './lots/lots.module';
+import { PostHarvestsModule } from './post-harvests/post-harvests.module';
+import { ClassificationsModule } from './classifications/classifications.module';
+import { TransportsModule } from './transports/transports.module';
+import { CertificationsModule } from './certifications/certifications.module';
+import { ExportationsModule } from './exportations/exportations.module';
 
 @Module({
   imports: [
@@ -27,8 +39,20 @@ import { BatchesModule } from './batches/batches.module';
       }),
     }),
     UsersModule,
-    BatchesModule,
     SuppliersModule,
+    ProducersModule,
+    PlotsModule,
+    CropsModule,
+    PlantingsModule,
+    InterventionsModule,
+    ClimaticConditionsModule,
+    HarvestsModule,
+    LotsModule,
+    PostHarvestsModule,
+    ClassificationsModule,
+    TransportsModule,
+    CertificationsModule,
+    ExportationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

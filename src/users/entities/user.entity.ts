@@ -17,8 +17,8 @@ export enum UserRole {
 
 @Entity({ name: 'users' })
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ unique: true, type: 'varchar', length: 255 })
   email: string;
@@ -34,7 +34,7 @@ export class User {
   })
   role: UserRole;
 
-  @Column({ default: true ,name:"is_active"})
+  @Column({ default: true, name: 'is_active' })
   isActive: boolean;
 
   @CreateDateColumn({
