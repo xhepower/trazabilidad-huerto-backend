@@ -1,9 +1,15 @@
-import { ClimaticCondition } from "src/climatic-conditions/entities/climatic-condition.entity";
-import { Crop } from "src/crops/entities/crop.entity";
-import { Harvest } from "src/harvests/entities/harvest.entity";
-import { Input } from "src/inputs/entities/input.entity";
-import { Intervention } from "src/interventions/entities/intervention.entity";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ClimaticCondition } from 'src/climatic-conditions/entities/climatic-condition.entity';
+import { Crop } from 'src/crops/entities/crop.entity';
+import { Harvest } from 'src/harvests/entities/harvest.entity';
+import { Input } from 'src/inputs/entities/input.entity';
+import { Intervention } from 'src/interventions/entities/intervention.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Planting {

@@ -1,7 +1,7 @@
-import { Planting } from "src/plantings/entities/planting.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Planting } from 'src/plantings/entities/planting.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({name:"climatic_conditions"})
+@Entity({ name: 'climatic_conditions' })
 export class ClimaticCondition {
   @PrimaryGeneratedColumn('uuid')
   id: string;

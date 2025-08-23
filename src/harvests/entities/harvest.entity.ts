@@ -1,6 +1,12 @@
-import { Lot } from "src/lots/entities/lot.entity";
-import { Planting } from "src/plantings/entities/planting.entity";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Lot } from 'src/lots/entities/lot.entity';
+import { Planting } from 'src/plantings/entities/planting.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Harvest {
