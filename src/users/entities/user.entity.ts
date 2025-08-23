@@ -12,7 +12,13 @@ import { Profile } from './profile.entity';
 import { Exclude } from 'class-transformer';
 
 export enum UserRole {
-  ADMIN = 'admin', FARMER = 'producer', AUDITOR = 'auditor', TRANSPORTER = 'transporter',RETAILER="retailer",VIEWER='viewer',DISTRIBUTOR="distributor"
+  ADMIN = 'admin',
+  FARMER = 'producer',
+  AUDITOR = 'auditor',
+  TRANSPORTER = 'transporter',
+  RETAILER = 'retailer',
+  VIEWER = 'viewer',
+  DISTRIBUTOR = 'distributor',
 }
 
 @Entity({ name: 'users' })

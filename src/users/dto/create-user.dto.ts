@@ -20,7 +20,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   email: string;
 
-   @IsEnum(UserRole)
+  @IsEnum(UserRole)
   role: UserRole;
 
   @ValidateNested()

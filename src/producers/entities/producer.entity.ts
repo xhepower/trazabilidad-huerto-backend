@@ -1,5 +1,5 @@
-import { Plot } from "src/plots/entities/plot.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Plot } from 'src/plots/entities/plot.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Producer {
   @PrimaryGeneratedColumn('uuid')
