@@ -1,26 +1,56 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateLotDto } from './dto/create-lot.dto';
 import { UpdateLotDto } from './dto/update-lot.dto';
+import { Repository } from 'typeorm';
+import { Lot } from './entities/lot.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class LotsService {
-  create(createLotDto: CreateLotDto) {
-    return 'This action adds a new lot';
+  @InjectRepository(Lot)
+  private lotsRepository: Repository<Lot>;
+  async create(createLotDto: CreateLotDto) {
+    try {
+      const newLot = await this.lotsRepository.create(
+        createLotDto,
+      );
+      const savedLot =
+        await this.lotsRepository.save(newLot);
+      return this.findOne(savedLot.id);
+    } catch (error) {
+      throw new BadRequestException('Error creating lot');
+    }
   }
 
-  findAll() {
-    return `This action returns all lots`;
+  async findAll() {
+    return this.lotsRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} lot`;
+  async findOne(id: string) {
+    const lot = await this.lotsRepository.findOneBy({
+      id,
+    });
+    if (!lot) {
+      throw new NotFoundException(`Lot with id ${id} not found`);
+    }
+    return lot;
   }
 
-  update(id: number, updateLotDto: UpdateLotDto) {
-    return `This action updates a #${id} lot`;
+  async update(id: string, updateLotDto: UpdateLotDto) {
+    const lot = await this.findOne(id);
+    const updatedLot = this.lotsRepository.merge(
+      lot,
+      updateLotDto,
+    );
+    return await this.lotsRepository.save(updatedLot);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} lot`;
+  async remove(id: string) {
+    const lot = await this.findOne(id);
+    return this.lotsRepository.delete(id);
   }
 }

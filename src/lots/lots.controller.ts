@@ -19,16 +19,16 @@ export class LotsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.lotsService.findOne(+id);
+    return this.lotsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateLotDto: UpdateLotDto) {
-    return this.lotsService.update(+id, updateLotDto);
+    return this.lotsService.update(id, updateLotDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.lotsService.remove(+id);
+    return this.lotsService.remove(id);
   }
 }

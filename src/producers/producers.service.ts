@@ -1,26 +1,59 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateProducerDto } from './dto/create-producer.dto';
 import { UpdateProducerDto } from './dto/update-producer.dto';
+import { Repository } from 'typeorm';
+import { Producer } from './entities/producer.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ProducersService {
-  create(createProducerDto: CreateProducerDto) {
-    return 'This action adds a new producer';
+  @InjectRepository(Producer)
+  private producersRepository: Repository<Producer>;
+  async create(createProducerDto: CreateProducerDto) {
+    try {
+      const newProducer = await this.producersRepository.create(createProducerDto);
+      const savedProducer = await this.producersRepository.save(newProducer);
+      return this.findOne(savedProducer.id);
+    } catch (error) {
+      throw new BadRequestException('Error creating producer');
+    }
+  }
+  async findByUserId(userId: string) {
+    const producer = await this.producersRepository.findOne({
+      where: { user: { id: userId } },
+    });
+    if (!producer) {
+      throw new NotFoundException(`Producer with userId ${userId} not found`);
+    }
+    return producer;
+  }
+  async findAll() {
+    return this.producersRepository.find();
   }
 
-  findAll() {
-    return `This action returns all producers`;
+  async findOne(id: string) {
+    const producer = await this.producersRepository.findOneBy({ id });
+    if (!producer) {
+      throw new NotFoundException(`Producer with id ${id} not found`);
+    }
+    return producer;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} producer`;
+  async update(id: string, updateProducerDto: UpdateProducerDto) {
+    const producer = await this.findOne(id);
+    const updatedProducer = this.producersRepository.merge(
+      producer,
+      updateProducerDto,
+    );
+    return await this.producersRepository.save(updatedProducer);
   }
 
-  update(id: number, updateProducerDto: UpdateProducerDto) {
-    return `This action updates a #${id} producer`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} producer`;
+  async remove(id: string) {
+    const producer = await this.findOne(id);
+    return this.producersRepository.delete(id);
   }
 }

@@ -19,16 +19,16 @@ export class HarvestsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.harvestsService.findOne(+id);
+    return this.harvestsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateHarvestDto: UpdateHarvestDto) {
-    return this.harvestsService.update(+id, updateHarvestDto);
+    return this.harvestsService.update(id, updateHarvestDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.harvestsService.remove(+id);
+    return this.harvestsService.remove(id);
   }
 }

@@ -1,15 +1,19 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateClimaticConditionDto {
   @IsString()
   @IsNotEmpty()
-  condition: string;
+  type: string;
 
   @IsNumber()
   @IsOptional()
-  temperature?: number;
+  value?: number;
 
   @IsNumber()
   @IsOptional()
   humidity?: number;
+
+  @IsDate()
+  date:Date
 }
+

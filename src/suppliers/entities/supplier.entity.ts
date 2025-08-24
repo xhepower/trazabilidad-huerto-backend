@@ -10,7 +10,7 @@ import {
 @Entity({ name: 'suppliers' })
 export class Supplier {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column()
   name: string;

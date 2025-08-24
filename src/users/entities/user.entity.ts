@@ -7,13 +7,15 @@ import {
   OneToOne,
   JoinColumn,
   BeforeInsert,
+  BeforeUpdate,
 } from 'typeorm';
 import { Profile } from './profile.entity';
 import { Exclude } from 'class-transformer';
+import { Producer } from 'src/producers/entities/producer.entity';
 
 export enum UserRole {
   ADMIN = 'admin',
-  FARMER = 'producer',
+  PRODUCER = 'producer',
   AUDITOR = 'auditor',
   TRANSPORTER = 'transporter',
   RETAILER = 'retailer',
@@ -57,11 +59,36 @@ export class User {
   })
   updatedAt: Date;
 
-  @OneToOne(() => Profile, { nullable: false, cascade: true })
-  @JoinColumn({ name: 'profile_id' })
+  @OneToOne(() => Profile, (profile) => profile.user, {
+    nullable: false,
+    cascade: true,
+  })
   profile: Profile;
 
+  @OneToOne(() => Producer, (producer) => producer.user, {
+    cascade: true,
+  })
+  producer: Producer;
+
   @BeforeInsert()
+  async validateAndsHashPassword() {
+    this.hashPassword(); // Método para hashear la contraseña
+    this.validateRoleRelations(); // Método de validación
+  }
+  @BeforeUpdate()
+  validateRoleRelations() {
+    if (this.role === UserRole.PRODUCER && !this.producer) {
+      throw new Error(
+        'Un productor debe tener una entidad de productor asociada.',
+      );
+    }
+    // Opcionalmente, puedes asegurar que no se creen relaciones incorrectas
+    if (this.role !== UserRole.PRODUCER && this.producer) {
+      throw new Error('El usuario no puede tener una entidad de productor.');
+    }
+    // ... y así sucesivamente para otros roles
+  }
+
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);
   }

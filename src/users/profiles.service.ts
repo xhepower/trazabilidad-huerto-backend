@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { Repository } from 'typeorm';
@@ -10,7 +14,6 @@ export class ProfilesService {
   @InjectRepository(Profile)
   private profilesRepository: Repository<Profile>;
   async create(createProfileDto: CreateProfileDto) {
-    
     try {
       const newProfile = await this.profilesRepository.create(createProfileDto);
       const savedProfile = await this.profilesRepository.save(newProfile);
@@ -19,7 +22,15 @@ export class ProfilesService {
       throw new BadRequestException('Error creating profile');
     }
   }
-
+  async findByUserId(userId: string) {
+    const profile = await this.profilesRepository.findOne({
+      where: { user: { id: userId } },
+    });
+    if (!profile) {
+      throw new NotFoundException(`Profile with userId ${userId} not found`);
+    }
+    return profile;
+  }
   async findAll() {
     return this.profilesRepository.find();
   }
@@ -34,7 +45,10 @@ export class ProfilesService {
 
   async update(id: string, updateProfileDto: UpdateProfileDto) {
     const profile = await this.findOne(id);
-    const updatedProfile = this.profilesRepository.merge(profile, updateProfileDto);
+    const updatedProfile = this.profilesRepository.merge(
+      profile,
+      updateProfileDto,
+    );
     return await this.profilesRepository.save(updatedProfile);
   }
 

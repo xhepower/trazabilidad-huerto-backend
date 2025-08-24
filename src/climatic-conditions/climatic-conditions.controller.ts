@@ -19,16 +19,16 @@ export class ClimaticConditionsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.climaticConditionsService.findOne(+id);
+    return this.climaticConditionsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateClimaticConditionDto: UpdateClimaticConditionDto) {
-    return this.climaticConditionsService.update(+id, updateClimaticConditionDto);
+    return this.climaticConditionsService.update(id, updateClimaticConditionDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.climaticConditionsService.remove(+id);
+    return this.climaticConditionsService.remove(id);
   }
 }

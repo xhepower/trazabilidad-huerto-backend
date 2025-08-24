@@ -19,16 +19,16 @@ export class CertificationsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.certificationsService.findOne(+id);
+    return this.certificationsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCertificationDto: UpdateCertificationDto) {
-    return this.certificationsService.update(+id, updateCertificationDto);
+    return this.certificationsService.update(id, updateCertificationDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.certificationsService.remove(+id);
+    return this.certificationsService.remove(id);
   }
 }

@@ -19,16 +19,16 @@ export class InputsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.inputsService.findOne(+id);
+    return this.inputsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateInputDto: UpdateInputDto) {
-    return this.inputsService.update(+id, updateInputDto);
+    return this.inputsService.update(id, updateInputDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.inputsService.remove(+id);
+    return this.inputsService.remove(id);
   }
 }

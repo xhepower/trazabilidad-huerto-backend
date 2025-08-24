@@ -19,16 +19,16 @@ export class ExportationsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.exportationsService.findOne(+id);
+    return this.exportationsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateExportationDto: UpdateExportationDto) {
-    return this.exportationsService.update(+id, updateExportationDto);
+    return this.exportationsService.update(id, updateExportationDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.exportationsService.remove(+id);
+    return this.exportationsService.remove(id);
   }
 }

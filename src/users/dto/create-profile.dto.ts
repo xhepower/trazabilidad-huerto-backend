@@ -10,8 +10,10 @@ export class CreateProfileDto {
   lastName: string;
 
   @IsString()
+  @IsNotEmpty()
+  identificationNumber: string;
+
+  @IsString()
   @IsOptional()
   avatar: string;
-
-
 }

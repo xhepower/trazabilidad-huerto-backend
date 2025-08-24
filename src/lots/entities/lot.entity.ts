@@ -11,13 +11,14 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 
 @Entity()
 export class Lot {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-  @Column()
+  @Column({unique:true})
   lotCode: string;
   @Column({ type: 'date' })
   createdAt: Date;

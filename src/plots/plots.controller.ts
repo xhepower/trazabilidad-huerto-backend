@@ -19,16 +19,16 @@ export class PlotsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.plotsService.findOne(+id);
+    return this.plotsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePlotDto: UpdatePlotDto) {
-    return this.plotsService.update(+id, updatePlotDto);
+    return this.plotsService.update(id, updatePlotDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.plotsService.remove(+id);
+    return this.plotsService.remove(id);
   }
 }

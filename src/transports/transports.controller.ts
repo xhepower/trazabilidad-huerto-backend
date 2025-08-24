@@ -19,16 +19,16 @@ export class TransportsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.transportsService.findOne(+id);
+    return this.transportsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTransportDto: UpdateTransportDto) {
-    return this.transportsService.update(+id, updateTransportDto);
+    return this.transportsService.update(id, updateTransportDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.transportsService.remove(+id);
+    return this.transportsService.remove(id);
   }
 }

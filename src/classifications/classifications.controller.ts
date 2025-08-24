@@ -19,16 +19,16 @@ export class ClassificationsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.classificationsService.findOne(+id);
+    return this.classificationsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateClassificationDto: UpdateClassificationDto) {
-    return this.classificationsService.update(+id, updateClassificationDto);
+    return this.classificationsService.update(id, updateClassificationDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.classificationsService.remove(+id);
+    return this.classificationsService.remove(id);
   }
 }

@@ -1,5 +1,6 @@
 import { Plot } from 'src/plots/entities/plot.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Producer {
   @PrimaryGeneratedColumn('uuid')
@@ -14,4 +15,7 @@ export class Producer {
   contact: string;
   @OneToMany(() => Plot, (plot) => plot.producer)
   plots: Plot[];
+  @OneToOne(() => User, (user)=> user.producer)
+   @JoinColumn({ name: 'user_id' })
+   user: User;
 }

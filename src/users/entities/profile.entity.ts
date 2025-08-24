@@ -4,7 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity({
   name: 'profiles',
@@ -36,4 +39,8 @@ export class Profile {
     default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @OneToOne(() => User, (user)=> user.profile)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }

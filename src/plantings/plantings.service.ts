@@ -1,26 +1,50 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePlantingDto } from './dto/create-planting.dto';
 import { UpdatePlantingDto } from './dto/update-planting.dto';
+import { Repository } from 'typeorm';
+import { Planting } from './entities/planting.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class PlantingsService {
-  create(createPlantingDto: CreatePlantingDto) {
-    return 'This action adds a new planting';
+  @InjectRepository(Planting)
+  private plantingsRepository: Repository<Planting>;
+  async create(createPlantingDto: CreatePlantingDto) {
+    try {
+      const newPlanting = await this.plantingsRepository.create(createPlantingDto);
+      const savedPlanting = await this.plantingsRepository.save(newPlanting);
+      return this.findOne(savedPlanting.id);
+    } catch (error) {
+      throw new BadRequestException('Error creating planting');
+    }
   }
 
-  findAll() {
-    return `This action returns all plantings`;
+  async findAll() {
+    return this.plantingsRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} planting`;
+  async findOne(id: string) {
+    const planting = await this.plantingsRepository.findOneBy({
+      id,
+    });
+    if (!planting) {
+      throw new NotFoundException(`Planting with id ${id} not found`);
+    }
+    return planting;
   }
 
-  update(id: number, updatePlantingDto: UpdatePlantingDto) {
-    return `This action updates a #${id} planting`;
+  async update(id: string, updatePlantingDto: UpdatePlantingDto) {
+    const planting = await this.findOne(id);
+    const updatedPlanting = this.plantingsRepository.merge(planting, updatePlantingDto);
+    return await this.plantingsRepository.save(updatedPlanting);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} planting`;
+  async remove(id: string) {
+    const planting = await this.findOne(id);
+    return this.plantingsRepository.delete(id);
   }
 }
