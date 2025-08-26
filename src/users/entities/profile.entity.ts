@@ -24,7 +24,11 @@ export class Profile {
   @Column({ type: 'varchar', length: 255, name: 'identification_number' })
   identificationNumber: string;
   @Column({ type: 'varchar', length: 255, nullable: true })
+  phone: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
   avatar: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  address: string;
 
   @CreateDateColumn({
     name: 'created_at',
@@ -40,7 +44,7 @@ export class Profile {
   })
   updatedAt: Date;
 
-  @OneToOne(() => User, (user)=> user.profile)
+  @OneToOne(() => User, (user) => user.profile)
   @JoinColumn({ name: 'user_id' })
   user: User;
 }

@@ -8,6 +8,7 @@ import {
   JoinColumn,
   BeforeInsert,
   BeforeUpdate,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Profile } from './profile.entity';
 import { Exclude } from 'class-transformer';
@@ -16,11 +17,11 @@ import { Producer } from 'src/producers/entities/producer.entity';
 export enum UserRole {
   ADMIN = 'admin',
   PRODUCER = 'producer',
-  AUDITOR = 'auditor',
+  INSPECTOR = 'inspector',
   TRANSPORTER = 'transporter',
-  RETAILER = 'retailer',
+  EXPORTER = 'retailer',
   VIEWER = 'viewer',
-  DISTRIBUTOR = 'distributor',
+  
 }
 
 @Entity({ name: 'users' })
@@ -52,7 +53,7 @@ export class User {
   })
   createdAt: Date;
 
-  @CreateDateColumn({
+  @UpdateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
     name: 'updated_at',

@@ -1,6 +1,6 @@
 import { Crop } from 'src/crops/entities/crop.entity';
 import { Producer } from 'src/producers/entities/producer.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Plot {
@@ -11,6 +11,7 @@ export class Plot {
   @Column('decimal', { precision: 10, scale: 2 })
   areaHectares: number;
   @ManyToOne(() => Producer, (producer) => producer.plots)
+  @JoinColumn({ name: 'producer_id' })
   producer: Producer;
   @OneToMany(() => Crop, (crop) => crop.plot)
   crops: Crop[];

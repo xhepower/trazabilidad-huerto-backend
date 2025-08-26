@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
@@ -10,7 +14,6 @@ export class UsersService {
   @InjectRepository(User)
   private usersRepository: Repository<User>;
   async create(createUserDto: CreateUserDto) {
-    
     try {
       const newUser = await this.usersRepository.create(createUserDto);
       const savedUser = await this.usersRepository.save(newUser);
@@ -21,11 +24,14 @@ export class UsersService {
   }
 
   async findAll() {
-    return this.usersRepository.find();
+    return this.usersRepository.find({ relations: ['profile', 'producer'] });
   }
 
   async findOne(id: string) {
-    const user = await this.usersRepository.findOneBy({ id });
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: ['producer'], // 👈 para que no truene tu validador
+    });
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);
     }
@@ -33,7 +39,12 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const user = await this.findOne(id);
+    const user: User = await this.findOne(id);
+    
+    if (user.id !== id) {
+      throw new BadRequestException('Error creating user');
+    }
+
     const updatedUser = this.usersRepository.merge(user, updateUserDto);
     return await this.usersRepository.save(updatedUser);
   }

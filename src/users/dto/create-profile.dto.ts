@@ -15,5 +15,13 @@ export class CreateProfileDto {
 
   @IsString()
   @IsOptional()
+  phone: string;
+
+  @IsString()
+  @IsOptional()
+  address: string;
+
+  @IsString()
+  @IsOptional()
   avatar: string;
 }

@@ -25,6 +25,7 @@ export class ProfilesService {
   async findByUserId(userId: string) {
     const profile = await this.profilesRepository.findOne({
       where: { user: { id: userId } },
+      relations: ['user'],
     });
     if (!profile) {
       throw new NotFoundException(`Profile with userId ${userId} not found`);
@@ -32,11 +33,11 @@ export class ProfilesService {
     return profile;
   }
   async findAll() {
-    return this.profilesRepository.find();
+    return this.profilesRepository.find({  relations: ['user'] });
   }
 
   async findOne(id: string) {
-    const profile = await this.profilesRepository.findOneBy({ id });
+    const profile = await this.profilesRepository.findOne({ where: { id },relations:['user'] });
     if (!profile) {
       throw new NotFoundException(`Profile with id ${id} not found`);
     }

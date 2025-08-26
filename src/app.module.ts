@@ -26,7 +26,10 @@ import { ProfilesModule } from './users/profiles.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -58,7 +61,7 @@ import { ProfilesModule } from './users/profiles.module';
     ExportationsModule,
     InputsModule,
     SalesModule,
-    ProfilesModule
+    ProfilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -8,16 +8,26 @@ import { UpdateCropDto } from './dto/update-crop.dto';
 import { Repository } from 'typeorm';
 import { Crop } from './entities/crop.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PlotsService } from 'src/plots/plots.service';
 
 @Injectable()
 export class CropsService {
-  @InjectRepository(Crop)
-  private cropsRepository: Repository<Crop>;
+  constructor(
+ @InjectRepository(Crop)
+  private cropsRepository: Repository<Crop>,
+  private plotsService:PlotsService
+
+  ){
+
+  }
+ 
   async create(createCropDto: CreateCropDto) {
     try {
+      const plot=await this.plotsService.findOne(createCropDto.plotId)
       const newCrop = await this.cropsRepository.create(
         createCropDto,
       );
+      newCrop.plot=plot
       const savedCrop =
         await this.cropsRepository.save(newCrop);
       return this.findOne(savedCrop.id);
@@ -27,7 +37,7 @@ export class CropsService {
   }
 
   async findAll() {
-    return this.cropsRepository.find();
+    return this.cropsRepository.find({relations:['plot','plantings']});
   }
 
   async findOne(id: string) {
