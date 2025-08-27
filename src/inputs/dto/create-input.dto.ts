@@ -1,11 +1,9 @@
-import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CreateInputDto {
   @IsString()
-  @IsNotEmpty()
-  name: string;
-
-   @IsString()
   @IsNotEmpty()
   inputType: string;
 
@@ -13,7 +11,7 @@ export class CreateInputDto {
   @IsNotEmpty()
   commercialName: string;
 
-   @IsString()
+  @IsString()
   @IsNotEmpty()
   dose: string;
 
@@ -21,14 +19,14 @@ export class CreateInputDto {
   @IsNotEmpty()
   responsible: string;
 
-  @IsNumber()
-  @IsOptional()
-  quantity?: number;
-
+  @ApiProperty()
   @IsDate()
-  applicationDate: Date
+  @Type(() => Date)
+  applicationDate: Date;
 
-
+  @ApiProperty()
+  @IsUUID()
+  plantingId: string;
 }
 
   

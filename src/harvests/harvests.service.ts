@@ -8,18 +8,23 @@ import { UpdateHarvestDto } from './dto/update-harvest.dto';
 import { Repository } from 'typeorm';
 import { Harvest } from './entities/harvest.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PlantingsService } from 'src/plantings/plantings.service';
+import { generateHash } from 'src/common/hash.utils';
 
 @Injectable()
 export class HarvestsService {
-  @InjectRepository(Harvest)
-  private harvestsRepository: Repository<Harvest>;
+  constructor(
+    @InjectRepository(Harvest)
+    private harvestsRepository: Repository<Harvest>,
+    private plantingService:PlantingsService
+  ) {}
   async create(createHarvestDto: CreateHarvestDto) {
     try {
-      const newHarvest = await this.harvestsRepository.create(
-        createHarvestDto,
-      );
-      const savedHarvest =
-        await this.harvestsRepository.save(newHarvest);
+      const planting=await this.plantingService.findOne(createHarvestDto.plantingId)
+      const newHarvest = await this.harvestsRepository.create(createHarvestDto);
+      newHarvest.planting=planting
+      newHarvest.hash=generateHash(newHarvest)
+      const savedHarvest = await this.harvestsRepository.save(newHarvest);
       return this.findOne(savedHarvest.id);
     } catch (error) {
       throw new BadRequestException('Error creating harvest');
@@ -27,12 +32,13 @@ export class HarvestsService {
   }
 
   async findAll() {
-    return this.harvestsRepository.find();
+    return this.harvestsRepository.find({ relations: ['planting', 'lots'] });
   }
 
   async findOne(id: string) {
-    const harvest = await this.harvestsRepository.findOneBy({
-      id,
+    const harvest = await this.harvestsRepository.findOne({
+      where: { id },
+      relations: ['planting', 'lots'],
     });
     if (!harvest) {
       throw new NotFoundException(`Harvest with id ${id} not found`);

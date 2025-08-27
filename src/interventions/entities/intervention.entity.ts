@@ -1,5 +1,5 @@
 import { Planting } from "src/plantings/entities/planting.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Intervention {
@@ -17,4 +17,16 @@ export class Intervention {
   hash: string;
   @Column({ nullable: true })
   prevHash: string;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  validateIntervention() {
+    this.validateDates();
+  }
+
+  private validateDates(): void {
+    if (this.date > new Date()) {
+      throw new Error('Intervention date cannot be in the future');
+    }
+  }
 }

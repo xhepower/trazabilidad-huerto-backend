@@ -1,19 +1,24 @@
-import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CreateClimaticConditionDto {
+  @ApiProperty()
   @IsString()
-  @IsNotEmpty()
   type: string;
 
-  @IsNumber()
+  @ApiProperty({ required: false })
   @IsOptional()
+  @IsNumber()
   value?: number;
 
-  @IsNumber()
-  @IsOptional()
-  humidity?: number;
-
+  @ApiProperty()
   @IsDate()
-  date:Date
+  @Type(() => Date)
+  date: Date;
+
+  @ApiProperty()
+  @IsUUID()
+  plantingId: string;
 }
 

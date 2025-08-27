@@ -8,31 +8,38 @@ import { UpdateInputDto } from './dto/update-input.dto';
 import { Repository } from 'typeorm';
 import { Input } from './entities/input.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PlantingsService } from 'src/plantings/plantings.service';
+import { generateHash } from 'src/common/hash.utils';
 
 @Injectable()
 export class InputsService {
-  @InjectRepository(Input)
-  private inputsRepository: Repository<Input>;
+ constructor( @InjectRepository(Input)
+  private inputsRepository: Repository<Input>,
+private plantingService:PlantingsService){}
   async create(createInputDto: CreateInputDto) {
     try {
-      const newInput = await this.inputsRepository.create(
+      const planting=await this.plantingService.findOne(createInputDto.plantingId)
+      const newInput =  this.inputsRepository.create(
         createInputDto,
       );
+      newInput.planting=planting
+      newInput.hash=generateHash(newInput)
       const savedInput =
         await this.inputsRepository.save(newInput);
       return this.findOne(savedInput.id);
     } catch (error) {
+      console.log(error)
       throw new BadRequestException('Error creating input');
     }
   }
 
   async findAll() {
-    return this.inputsRepository.find();
+    return this.inputsRepository.find({relations:['planting']});
   }
 
   async findOne(id: string) {
-    const input = await this.inputsRepository.findOneBy({
-      id,
+    const input = await this.inputsRepository.findOne({
+      relations: ['planting'], where:{id}
     });
     if (!input) {
       throw new NotFoundException(`Input with id ${id} not found`);

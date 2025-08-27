@@ -4,6 +4,8 @@ import { Harvest } from 'src/harvests/entities/harvest.entity';
 import { Input } from 'src/inputs/entities/input.entity';
 import { Intervention } from 'src/interventions/entities/intervention.entity';
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   Entity,
   ManyToOne,
@@ -37,4 +39,34 @@ export class Planting {
   prevHash: string;
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  validatePlanting() {
+    this.validateSeedOrigin();
+    this.validateDates();
+  }
+
+  private validateSeedOrigin(): void {
+    const approvedOrigins = ['certified', 'registered', 'foundation'];
+
+    // if (!approvedOrigins.includes(this.seedOrigin.toLowerCase())) {
+    //   throw new Error('Seed origin not approved by international standards');
+    // }
+
+    if (!this.seedDocument || this.seedDocument.trim() === '') {
+      throw new Error('Seed documentation is required for traceability');
+    }
+
+    // const documentPattern = /^SEED-[A-Z]{3}-\d{6}$/;
+    // if (!documentPattern.test(this.seedDocument)) {
+    //   throw new Error('Invalid seed document format');
+    // }
+  }
+
+  private validateDates(): void {
+    if (this.plantingDate > new Date()) {
+      throw new Error('Planting date cannot be in the future');
+    }
+  }
 }

@@ -1,5 +1,5 @@
 import { Planting } from "src/plantings/entities/planting.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Input {
@@ -21,4 +21,40 @@ export class Input {
   hash: string;
   @Column({ nullable: true })
   prevHash: string;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  validateInput() {
+    this.validatePesticideUsage();
+    this.validateDates();
+  }
+
+  private validatePesticideUsage(): void {
+    const bannedPesticides = [
+      'DDT',
+      'Aldrin',
+      'Dieldrin',
+      'Endrin',
+      'Chlordane',
+      'Heptachlor',
+      'Hexachlorobenzene',
+      'Mirex',
+      'Toxaphene',
+    ];
+
+    if (
+      this.inputType === 'pesticide' &&
+      bannedPesticides.includes(this.commercialName)
+    ) {
+      throw new Error(
+        `Pesticide ${this.commercialName} banned by Codex Alimentarius`,
+      );
+    }
+  }
+
+  private validateDates(): void {
+    if (this.applicationDate > new Date()) {
+      throw new Error('Application date cannot be in the future');
+    }
+  }
 }
